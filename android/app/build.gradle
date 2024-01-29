@@ -102,6 +102,27 @@ android {
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
     }
+    packaging {
+        jniLibs {
+            keepDebugSymbols << "**/*.so"
+        }
+        resources {
+            excludes += "META-INF/DEPENDENCIES"
+            excludes += "META-INF/DEPENDENCIES.txt"
+            excludes += "META-INF/dependencies.txt"
+            excludes += "META-INF/LICENSE"
+            excludes += "META-INF/LICENSE.txt"
+            excludes += "META-INF/license.txt"
+            excludes += "META-INF/NOTICE"
+            excludes += "META-INF/NOTICE.txt"
+            excludes += "META-INF/notice.txt"
+            excludes += "META-INF/ASL2.0"
+            excludes += "META-INF/LGPL2.1"
+            excludes += "okhttp3/internal/publicsuffix/NOTICE"
+            excludes += "okhttp3/internal/publicsuffix/publicsuffixes.gz"
+            excludes += "play-services-safetynet.properties"
+        }
+    }
 }
 
 dependencies {
@@ -109,11 +130,17 @@ dependencies {
     implementation("com.facebook.react:react-android")
     implementation("com.facebook.react:flipper-integration")
 
+    // just for display
+    implementation("com.google.code.gson:gson:2.10.1")
+    implementation("com.theminesec.sdk:minehades-stage:1.10.105.12-rc-8") {
+        exclude group: "org.bouncycastle", module: "bcprov-jdk15on"
+        exclude group: "org.bouncycastle", module: "bcpkix-jdk15on"
+    }
+
     if (hermesEnabled.toBoolean()) {
         implementation("com.facebook.react:hermes-android")
     } else {
         implementation jscFlavor
     }
 }
-
 apply from: file("../../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesAppBuildGradle(project)

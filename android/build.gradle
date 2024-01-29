@@ -1,7 +1,7 @@
 buildscript {
     ext {
         buildToolsVersion = "34.0.0"
-        minSdkVersion = 21
+        minSdkVersion = 26
         compileSdkVersion = 34
         targetSdkVersion = 34
         ndkVersion = "25.1.8937393"
@@ -15,6 +15,27 @@ buildscript {
         classpath("com.android.tools.build:gradle")
         classpath("com.facebook.react:react-native-gradle-plugin")
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin")
+    }
+}
+
+allprojects {
+    repositories {
+        maven {
+            url = uri("https://developer.huawei.com/repo/")
+        }
+        maven {
+            def MINESEC_REGISTRY_LOGIN = project.MINESEC_REGISTRY_LOGIN
+            def MINESEC_REGISTRY_TOKEN = project.MINESEC_REGISTRY_TOKEN
+            println(MINESEC_REGISTRY_LOGIN)
+            println(MINESEC_REGISTRY_TOKEN)
+
+            name = "MineSecMavenClientRegistry"
+            url = uri("https://maven.pkg.github.com/theminesec/ms-registry-client")
+            credentials {
+                username = MINESEC_REGISTRY_LOGIN
+                password = MINESEC_REGISTRY_TOKEN
+            }
+        }
     }
 }
 
